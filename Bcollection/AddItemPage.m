@@ -66,6 +66,24 @@
     _lock=1;
     return YES;
 }
+
+-(instancetype)initWithItem:(BiliItem *)item{
+    self=[self init];
+    self.item=item;
+    UIImageView * newimageplace=[[UIImageView alloc]initWithFrame:self.imageplace.frame];
+    CGRect frame=CGRectMake(0, 0, _imageplace.frame.size.width,_imageplace.frame.size.height);
+    newimageplace.frame=frame;
+    newimageplace.image=item.image;
+    newimageplace.layer.masksToBounds=YES;
+    newimageplace.contentMode=UIViewContentModeScaleAspectFill;
+    [self.imageplace addSubview:newimageplace];
+    self.nameinput.text=item.name;
+    self.timeinput.text=item.time;
+    self.countryinput.text=item.country;
+    self.capacityinput.text=item.capacity;
+    return self;
+}
+
 -(instancetype)init{
     self=[super init];
     _lock=1;

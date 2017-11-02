@@ -115,6 +115,12 @@ static NSString * const reuseIdentifier = @"Cell";
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row<self.arr.count) {
         DetailView * detailview=[[DetailView alloc]initWithItem:self.arr[indexPath.row]];
+        detailview.itemsetter = ^(BiliItem *item) {
+            [self.arr replaceObjectAtIndex:indexPath.row withObject:item];
+            [self.navigationController  popViewControllerAnimated:YES ];
+            [self.collectionView reloadData];
+            [self saveData];
+        };
         [self.navigationController pushViewController:detailview animated:YES];
     }
 }

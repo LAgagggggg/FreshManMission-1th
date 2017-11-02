@@ -19,4 +19,7 @@
 @property BOOL lock;
 @property CGFloat keyboardheight;
 @property(strong,nonatomic)void(^itemsetter)(BiliItem * item);
+
+-(instancetype)initWithItem:(BiliItem *)item;
+
 @end

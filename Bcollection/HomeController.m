@@ -18,7 +18,17 @@
 static NSString * const reuseIdentifier = @"Cell";
 -(NSMutableArray *)arr{
     if (_arr==nil) {
-        _arr=[[NSMutableArray alloc]init];
+        NSString* documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        self.archiverPath=[documentPath stringByAppendingPathComponent:@"biliData.data"];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if([fileManager fileExistsAtPath:self.archiverPath]){
+            NSLog(@"file detected");
+            _arr=[NSKeyedUnarchiver unarchiveObjectWithFile:self.archiverPath];
+            [self.collectionView reloadData];
+        }
+        else{
+            _arr=[[NSMutableArray alloc]init];
+        }
     }
     return  _arr;
 }
@@ -33,6 +43,9 @@ static NSString * const reuseIdentifier = @"Cell";
     self.collectionView.backgroundColor=[UIColor darkGrayColor];
     self.navigationItem.title=@"主页";
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"🔍" style:0 target:nil action:nil];
+    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"🗑" style:0 target:self action:@selector(ActiveDelete)];
+    self.navigationController.navigationBar.barTintColor =[UIColor darkGrayColor];
+    self.navigationController.navigationBar.tintColor =[UIColor blackColor];
     // Do any additional setup after loading the view.
 }
 
@@ -40,21 +53,31 @@ static NSString * const reuseIdentifier = @"Cell";
 #pragma mark <UICollectionViewDataSource>
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return _arr.count+1;
+    return self.arr.count+1;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row==_arr.count) {
         BiliCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+        for (UIView *subview in [cell.contentView subviews]) {
+            [subview removeFromSuperview];
+        }
         cell.backgroundColor=[UIColor yellowColor];
         UIButton * add =[UIButton buttonWithType:UIButtonTypeContactAdd];
         [add addTarget:self action:@selector(addBiliItem) forControlEvents:UIControlEventTouchUpInside];
-        [cell addSubview:add];
+        [cell.contentView addSubview:add];
+        NSLog(@"add");
         add.center=CGPointMake(cell.frame.size.width/2, cell.frame.size.height/2);
         return cell;
     }
     else{
         BiliCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-        cell.backgroundColor=[UIColor redColor];
+        [cell setCellWithItem:self.arr[indexPath.row]];
+        cell.deleteButton.tag=indexPath.row;
+        cell.deleteCell = ^(NSInteger index) {
+            [self.arr removeObjectAtIndex:index];
+            [self.collectionView reloadData];
+            [self saveData];
+        };
         return cell;
     }
 
@@ -65,24 +88,44 @@ static NSString * const reuseIdentifier = @"Cell";
         [self.arr addObject:item];
         [self.navigationController  popViewControllerAnimated:YES ];
         [self.collectionView reloadData];
+        [self saveData];
     };
     [self.navigationController pushViewController:page animated:YES];
 }
 
--(void)saveItem:(BiliItem*)item{
-    NSString * imageName=[item.name stringByAppendingString:item.time];
-    [self saveImage:item.image WithName:imageName];
-    
+-(void)saveData{
+    [NSKeyedArchiver archiveRootObject:self.arr toFile:self.archiverPath];
 }
+-(void)ActiveDelete{
+    for (BiliCell * cell in self.collectionView.subviews) {
+        if ([cell isMemberOfClass:[BiliCell class]]) {
+            [UIView animateWithDuration:0.8 animations:^{
+                cell.deleteButton.enabled=!cell.deleteButton.enabled;
+                if (cell.deleteButton.enabled==YES) {
+                    cell.deleteButton.alpha=1;
+                }
+                else{
+                    cell.deleteButton.alpha=0;
+                }
+            }];
 
-- (void)saveImage:(UIImage *)image WithName:(NSString *)imageName
-{
-    NSData* imageData = UIImagePNGRepresentation(image);
-    NSString* libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    NSString* fullPath = [libraryPath stringByAppendingPathComponent:imageName];
-    [imageData writeToFile:fullPath atomically:NO];
-    
+        }
+    }
 }
+-(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.row<self.arr.count) {
+        DetailView * detailview=[[DetailView alloc]initWithItem:self.arr[indexPath.row]];
+        [self.navigationController pushViewController:detailview animated:YES];
+    }
+}
+//- (void)saveImage:(UIImage *)image WithName:(NSString *)imageName
+//{
+//    NSData* imageData = UIImagePNGRepresentation(image);
+//    NSString* libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+//    NSString* fullPath = [libraryPath stringByAppendingPathComponent:imageName];
+//    [imageData writeToFile:fullPath atomically:NO];
+//
+//}
 /*
 // Uncomment this method to specify if the specified item should be highlighted during tracking
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {

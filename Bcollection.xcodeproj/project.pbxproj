@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		083DE3E51FAA0A460003B892 /* itemlist.plist in Resources */ = {isa = PBXBuildFile; fileRef = 083DE3E41FAA0A460003B892 /* itemlist.plist */; };
+		08B6E0F21FAB174900CBA73B /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B6E0F11FAB174900CBA73B /* DetailView.m */; };
 		08F4167F1FA8502200CB868C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F4167E1FA8502200CB868C /* AppDelegate.m */; };
 		08F416871FA8502200CB868C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08F416861FA8502200CB868C /* Assets.xcassets */; };
 		08F4168D1FA8502200CB868C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F4168C1FA8502200CB868C /* main.m */; };
@@ -18,7 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		083DE3E41FAA0A460003B892 /* itemlist.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = itemlist.plist; sourceTree = "<group>"; };
+		08B6E0F01FAB174900CBA73B /* DetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
+		08B6E0F11FAB174900CBA73B /* DetailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
 		08F4167A1FA8502200CB868C /* Bcollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bcollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08F4167D1FA8502200CB868C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		08F4167E1FA8502200CB868C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -83,9 +84,10 @@
 				08F4167E1FA8502200CB868C /* AppDelegate.m */,
 				08F416931FA88AA700CB868C /* HomeController.h */,
 				08F416941FA88AA700CB868C /* HomeController.m */,
-				083DE3E41FAA0A460003B892 /* itemlist.plist */,
 				08F4169F1FA8A32800CB868C /* AddItemPage.h */,
 				08F416A01FA8A32800CB868C /* AddItemPage.m */,
+				08B6E0F01FAB174900CBA73B /* DetailView.h */,
+				08B6E0F11FAB174900CBA73B /* DetailView.m */,
 				08F4169C1FA89C4A00CB868C /* BiliItem.h */,
 				08F4169D1FA89C4A00CB868C /* BiliItem.m */,
 				08F416991FA8946600CB868C /* BiliCell.h */,
@@ -167,7 +169,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				08F416871FA8502200CB868C /* Assets.xcassets in Resources */,
-				083DE3E51FAA0A460003B892 /* itemlist.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,6 +238,7 @@
 				08F4169B1FA8946600CB868C /* BiliCell.m in Sources */,
 				08F416951FA88AA700CB868C /* HomeController.m in Sources */,
 				08F4167F1FA8502200CB868C /* AppDelegate.m in Sources */,
+				08B6E0F21FAB174900CBA73B /* DetailView.m in Sources */,
 				08F416A11FA8A32800CB868C /* AddItemPage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

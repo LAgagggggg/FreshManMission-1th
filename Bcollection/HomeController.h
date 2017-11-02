@@ -10,6 +10,7 @@
 #import "BiliCell.h"
 #import "BiliItem.h"
 #import "AddItemPage.h"
+#import "DetailView.h"
 @interface HomeController : UICollectionViewController<UICollectionViewDataSource,UINavigationControllerDelegate>
-
+@property(strong,nonatomic) NSString * archiverPath;
 @end

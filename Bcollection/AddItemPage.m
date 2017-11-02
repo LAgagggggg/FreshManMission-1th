@@ -54,8 +54,6 @@
     }
 }
 -(BOOL)textFieldShouldEndEditing:(UITextField *)textField{
-    NSLog(@"shouldediting");
-    NSLog(@"%d",[textField isFirstResponder]);
     CGRect frame = self.view.frame;
     CGFloat change=([UIScreen mainScreen].bounds.size.height-textField.frame.origin.y-textField.frame.size.height)-self.keyboardheight;
     NSLog(@"%f",change);
@@ -161,23 +159,30 @@
         newimageplace.layer.masksToBounds=YES;
         newimageplace.contentMode=UIViewContentModeScaleAspectFill;
         [self.imageplace addSubview:newimageplace];
+        if (self.item.name!=nil&&
+            self.item.image!=nil&&
+            self.item.time!=nil&&
+            self.item.country!=nil&&
+            self.item.capacity!=nil) {
+            self.navigationItem.rightBarButtonItem.enabled=YES;
+        }
+        else{
+            self.navigationItem.rightBarButtonItem.enabled=NO;
+        }
         [self dismissModalViewControllerAnimated:YES];
     }
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{
-    NSLog(@"endediting");
-    
-    NSLog(@"%d",[textField isFirstResponder]);
     self.item.name=_nameinput.text;
     self.item.time=_timeinput.text;
     self.item.country=_countryinput.text;
-    self.item.capacity=[_capacityinput.text intValue];
+    self.item.capacity=_capacityinput.text;
     if (self.item.name!=nil&&
         self.item.image!=nil&&
         self.item.time!=nil&&
         self.item.country!=nil&&
-        self.item.capacity!=0) {
+        self.item.capacity!=nil) {
         self.navigationItem.rightBarButtonItem.enabled=YES;
     }
     else{

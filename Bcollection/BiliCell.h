@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BiliItem.h"
 
 @interface BiliCell : UICollectionViewCell
+@property(strong,nonatomic)UIButton * deleteButton;
+@property(strong,nonatomic)void(^deleteCell)(NSInteger index);
 
+-(void)setCellWithItem:(BiliItem*)item;
 @end

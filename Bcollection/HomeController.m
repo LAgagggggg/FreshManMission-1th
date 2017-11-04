@@ -16,6 +16,83 @@
 @implementation HomeController
 
 static NSString * const reuseIdentifier = @"Cell";
+
+-(instancetype)initWithCollectionViewLayout:(UICollectionViewLayout *)layout{
+    self=[super initWithCollectionViewLayout:layout];
+    self.searchView=[[UITableView alloc]initWithFrame:CGRectMake([UIScreen mainScreen].bounds.size.width, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height) style:UITableViewStylePlain];
+    self.searchView.delegate=self;
+    self.searchView.dataSource=self;
+    UIPanGestureRecognizer *pan=[[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
+    [self.searchView addGestureRecognizer:pan];
+    [self.view addSubview:self.searchView];
+    return self;
+}
+
+-(void)CallSearchView{
+    [UIView animateWithDuration:0.8 animations:^{
+        CGRect f=self.searchView.frame;
+        if (f.origin.x==0) {
+            f.origin.x=[UIScreen mainScreen].bounds.size.width;
+            self.collectionView.alpha=1;
+        }
+        else{
+            f.origin.x=0;
+            self.collectionView.alpha=0;
+        }
+        self.searchView.frame=f;
+    }];
+}
+
+-(void)pan:(UIPanGestureRecognizer *)pan{
+    CGPoint transP = [pan translationInView:self.searchView];
+    CGRect f=self.searchView.frame;
+    f.origin.x+=transP.x;
+    if (f.origin.x<0) {
+        f.origin.x=0;
+    }
+    float ratio=self.searchView.frame.origin.x;
+    self.searchView.frame=f;
+    if(pan.state == UIGestureRecognizerStateEnded){
+        if (f.origin.x<[UIScreen mainScreen].bounds.size.width*2/3) {
+            f.origin.x =0;
+        }
+        else{
+            f.origin.x =[UIScreen mainScreen].bounds.size.width;
+        }
+        ratio=f.origin.x/[UIScreen mainScreen].bounds.size.width;
+        [UIView animateWithDuration:0.5 animations:^{
+            self.searchView.frame=f;
+            self.collectionView.alpha=ratio;
+        }];
+    }
+    ratio=f.origin.x/[UIScreen mainScreen].bounds.size.width;
+    self.collectionView.alpha=ratio;
+    [pan setTranslation:CGPointZero inView:self.searchView];
+}
+
+-(UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    UIView * searchBar=[[UIView alloc]initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 64)];
+    UITextField * searchField=[[UITextField alloc]initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 64)];
+    searchField.placeholder=@"搜索";
+    searchField.borderStyle=UITextBorderStyleRoundedRect;
+    [searchBar addSubview:searchField];
+    return searchBar;
+}
+
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
+    return 1;
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 3;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell * cell=[[UITableViewCell alloc]init];
+    cell.backgroundColor=[UIColor redColor];
+    return cell;
+}
+
 -(NSMutableArray *)arr{
     if (_arr==nil) {
         NSString* documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -42,7 +119,7 @@ static NSString * const reuseIdentifier = @"Cell";
     [self.collectionView registerClass:[BiliCell class] forCellWithReuseIdentifier:reuseIdentifier];
     self.collectionView.backgroundColor=[UIColor darkGrayColor];
     self.navigationItem.title=@"主页";
-    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"🔍" style:0 target:nil action:nil];
+    self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"🔍" style:0 target:self action:@selector(CallSearchView)];
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc]initWithTitle:@"🗑" style:0 target:self action:@selector(ActiveDelete)];
     self.navigationController.navigationBar.barTintColor =[UIColor darkGrayColor];
     self.navigationController.navigationBar.tintColor =[UIColor blackColor];
@@ -80,7 +157,7 @@ static NSString * const reuseIdentifier = @"Cell";
         };
         return cell;
     }
-
+    
 }
 -(void)addBiliItem{
     AddItemPage * page=[[AddItemPage alloc]init];
@@ -108,7 +185,7 @@ static NSString * const reuseIdentifier = @"Cell";
                     cell.deleteButton.alpha=0;
                 }
             }];
-
+            
         }
     }
 }
@@ -124,41 +201,34 @@ static NSString * const reuseIdentifier = @"Cell";
         [self.navigationController pushViewController:detailview animated:YES];
     }
 }
-//- (void)saveImage:(UIImage *)image WithName:(NSString *)imageName
-//{
-//    NSData* imageData = UIImagePNGRepresentation(image);
-//    NSString* libraryPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-//    NSString* fullPath = [libraryPath stringByAppendingPathComponent:imageName];
-//    [imageData writeToFile:fullPath atomically:NO];
-//
-//}
-/*
-// Uncomment this method to specify if the specified item should be highlighted during tracking
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
-}
-*/
 
 /*
-// Uncomment this method to specify if the specified item should be selected
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
-*/
+ // Uncomment this method to specify if the specified item should be highlighted during tracking
+ - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+ return YES;
+ }
+ */
 
 /*
-// Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-- (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
-}
+ // Uncomment this method to specify if the specified item should be selected
+ - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+ return YES;
+ }
+ */
 
-- (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
-}
-*/
+/*
+ // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
+ - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
+ return NO;
+ }
+ 
+ - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+ return NO;
+ }
+ 
+ - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
+ 
+ }
+ */
 
 @end

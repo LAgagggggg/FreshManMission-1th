@@ -11,6 +11,7 @@
 #import "BiliItem.h"
 #import "AddItemPage.h"
 #import "DetailView.h"
-@interface HomeController : UICollectionViewController<UICollectionViewDataSource,UINavigationControllerDelegate>
+@interface HomeController : UICollectionViewController<UICollectionViewDataSource,UINavigationControllerDelegate,UITableViewDelegate,UITableViewDataSource>
 @property(strong,nonatomic) NSString * archiverPath;
+@property(strong,nonatomic) UITableView * searchView;
 @end

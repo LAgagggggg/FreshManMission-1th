@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		08B6E0F21FAB174900CBA73B /* DetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08B6E0F11FAB174900CBA73B /* DetailView.m */; };
+		08D7AF9E1FADEFE5003B9A9A /* SearchView.m in Sources */ = {isa = PBXBuildFile; fileRef = 08D7AF9D1FADEFE5003B9A9A /* SearchView.m */; };
 		08F4167F1FA8502200CB868C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F4167E1FA8502200CB868C /* AppDelegate.m */; };
 		08F416871FA8502200CB868C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08F416861FA8502200CB868C /* Assets.xcassets */; };
 		08F4168D1FA8502200CB868C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F4168C1FA8502200CB868C /* main.m */; };
@@ -20,6 +21,8 @@
 /* Begin PBXFileReference section */
 		08B6E0F01FAB174900CBA73B /* DetailView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailView.h; sourceTree = "<group>"; };
 		08B6E0F11FAB174900CBA73B /* DetailView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailView.m; sourceTree = "<group>"; };
+		08D7AF9C1FADEFE5003B9A9A /* SearchView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchView.h; sourceTree = "<group>"; };
+		08D7AF9D1FADEFE5003B9A9A /* SearchView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchView.m; sourceTree = "<group>"; };
 		08F4167A1FA8502200CB868C /* Bcollection.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bcollection.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		08F4167D1FA8502200CB868C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		08F4167E1FA8502200CB868C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -95,6 +98,8 @@
 				08F416861FA8502200CB868C /* Assets.xcassets */,
 				08F4168B1FA8502200CB868C /* Info.plist */,
 				08F4168C1FA8502200CB868C /* main.m */,
+				08D7AF9C1FADEFE5003B9A9A /* SearchView.h */,
+				08D7AF9D1FADEFE5003B9A9A /* SearchView.m */,
 			);
 			path = Bcollection;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08D7AF9E1FADEFE5003B9A9A /* SearchView.m in Sources */,
 				08F4168D1FA8502200CB868C /* main.m in Sources */,
 				08F4169E1FA89C4A00CB868C /* BiliItem.m in Sources */,
 				08F4169B1FA8946600CB868C /* BiliCell.m in Sources */,

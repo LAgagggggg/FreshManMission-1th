@@ -39,6 +39,10 @@
     });
     HomeController *homecontroller = [[HomeController alloc]initWithCollectionViewLayout:layout];
     UINavigationController * navigationC=[[UINavigationController alloc]initWithRootViewController:homecontroller];
+    navigationC.navigationBar.tintColor=[UIColor blackColor];
+//    UIView * trashView=[[UIView alloc]initWithFrame:CGRectMake(12, 8, 25, 25)];
+//    trashView.backgroundColor=[UIColor darkGrayColor];
+//    [navigationC.navigationBar addSubview: trashView];
     self.window.rootViewController = navigationC;
     [self.window makeKeyAndVisible];
     

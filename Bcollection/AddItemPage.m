@@ -94,7 +94,7 @@
     self.view.backgroundColor=[UIColor darkGrayColor];
     NSInteger margin=40;
     self.imageplace =[[UIView alloc]initWithFrame:CGRectMake(margin, 64+margin, [UIScreen mainScreen].bounds.size.width-2*margin, ([UIScreen mainScreen].bounds.size.width-2*margin)*0.75)];
-    self.imageplace.backgroundColor=[UIColor greenColor];
+    self.imageplace.backgroundColor=[UIColor lightGrayColor];
     [self.view addSubview:self.imageplace];
     UILabel * tip=[[UILabel alloc]initWithFrame:CGRectMake(0, 0, 150, 10)];
     tip.text=@"点击此处添加图片";

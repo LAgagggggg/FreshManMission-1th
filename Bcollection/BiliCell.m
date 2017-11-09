@@ -19,8 +19,8 @@
     imageview.contentMode=UIViewContentModeScaleAspectFill;
     imageview.layer.masksToBounds=YES;
     UILabel * namelabel=[[UILabel alloc]initWithFrame:CGRectMake(0, imageview.frame.size.height+2, self.frame.size.width,self.frame.size.height/8)];
-    UILabel * timelabel=[[UILabel alloc]initWithFrame:CGRectMake(0, imageview.frame.size.height+4+namelabel.frame.size.height, self.frame.size.width/2,self.frame.size.height/8)];
-    UILabel * capacitylabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/2, imageview.frame.size.height+4+namelabel.frame.size.height, self.frame.size.width/2,self.frame.size.height/8)];
+    UILabel * timelabel=[[UILabel alloc]initWithFrame:CGRectMake(5, imageview.frame.size.height+4+namelabel.frame.size.height, self.frame.size.width/2,self.frame.size.height/8)];
+    UILabel * capacitylabel=[[UILabel alloc]initWithFrame:CGRectMake(self.frame.size.width/2-5, imageview.frame.size.height+4+namelabel.frame.size.height, self.frame.size.width/2,self.frame.size.height/8)];
     namelabel.text=item.name;
     timelabel.text=item.time;
     capacitylabel.text=[item.capacity stringByAppendingString:@"集"];
@@ -44,6 +44,11 @@
     [self.contentView addSubview:timelabel];
     [self.contentView addSubview:capacitylabel];
     [self.contentView addSubview:self.deleteButton];
+    UIBezierPath *maskPath = [UIBezierPath bezierPathWithRoundedRect:self.bounds byRoundingCorners:UIRectCornerTopLeft|UIRectCornerTopRight|UIRectCornerBottomRight|UIRectCornerBottomLeft cornerRadii:CGSizeMake(10, 10)];
+    CAShapeLayer *maskLayer = [[CAShapeLayer alloc]init];
+    maskLayer.frame = self.bounds;
+    maskLayer.path = maskPath.CGPath;
+    self.layer.mask = maskLayer;
 }
 -(void)DeleteAction{
     NSLog(@"%lu",self.deleteButton.tag);
